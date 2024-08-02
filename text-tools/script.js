@@ -1,7 +1,7 @@
 let history = [];
 let historyIndex = -1;
 let pushingFirstTime = true;
-let isProcessingBuffer
+let isProcessingBuffer;
 let selectionStart;
 let selectionEnd;
 const encryptedApiKeys = ['U2FsdGVkX1+Te/5VyrZ8Lx/QpDNqreG1BuM4HVfbKqMM8ai1tvsY45t8dt8vQRmw2EaDKXC2POkqp4dpaKEo7nlvYjiuZyPAagHkV1ESzX8=',
@@ -17,7 +17,7 @@ const warningLabel = document.getElementById('warningLabel');
 const errorDisplay = document.getElementById('errorDisplay');
 const tempSlider = document.getElementById("temp");
 const tempLabel = document.getElementById("tempLabel");
-const defaultLanguage = "English"
+const defaultLanguage = "English";
 let isProcessing = false;
 const buttons = document.querySelectorAll('button');
 const loadingIndicator = document.createElement('div');
@@ -109,11 +109,11 @@ window.onload = () => {
             tempLabel.textContent = "Consistent";
         }
 
-    if (savedSummaryPercent) {
-        document.getElementById('summaryPercent').value = savedSummaryPercent;
+        if (savedSummaryPercent) {
+            document.getElementById('summaryPercent').value = savedSummaryPercent;
 
-    }
-        
+        }
+
     }
 
     document.addEventListener('keydown', handleKeyboardShortcuts);
@@ -124,7 +124,7 @@ window.onload = () => {
         textInput.style.fontFamily = savedFont;
         fontSelect.value = savedFont;
     }
-    
+
     // Event listener for font change
     fontSelect.addEventListener('change', (event) => {
         const selectedFont = event.target.value;
@@ -193,7 +193,7 @@ function updateTextInput(result) {
     if (selectionMode && selectionStart !== selectionEnd) {
         let newText = textInput.value.substring(0, selectionStart) + result + textInput.value.substring(selectionEnd);
         textInput.value = newText;
-        
+
     } else {
         textInput.value = result;
     }
@@ -210,7 +210,7 @@ function saveToHistory(text) {
     historyIndex = history.length - 1;
     localStorage.setItem('history', JSON.stringify(history.slice(Math.max(history.length - 10, 0))));
 }
-async function callGroqAPI(prompt, max_tokens=null) {
+async function callGroqAPI(prompt, max_tokens = null) {
     if (isEmpty(prompt)) {
         return "";
     }
@@ -227,15 +227,15 @@ async function callGroqAPI(prompt, max_tokens=null) {
 
     try {
 
-        isProcessingBuffer = window.setInterval(function () {
-            if (isProcessing) (
+        isProcessingBuffer = window.setInterval(function() {
+            if (isProcessing)(
                 loadingTip.style.display = 'block'
-            )
+            );
         }, 1000);
 
-        let modelName = "llama3-70b-8192" // default model 
+        let modelName = "llama3-70b-8192"; // default model 
         if (!isEmpty(localStorage.getItem('model'))) {
-            modelName = localStorage.getItem('model')
+            modelName = localStorage.getItem('model');
         }
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
@@ -244,7 +244,10 @@ async function callGroqAPI(prompt, max_tokens=null) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                messages: [{ role: 'system', content: "You are an expert text editor. Keep the original text's length and tone unless tasked or specified otherwise. Do not make any disclaimers or notes. Do not ask any follow-up questions. Do not start with here is or introduce the answer in any way. If there is no meaningful way to perform your task, return the input as is without any changes. Respond strictly in " + document.getElementById('language').value + ". Your task is to " + prompt }],
+                messages: [{
+                    role: 'system',
+                    content: "You are an expert text editor. Keep the original text's length and tone unless tasked or specified otherwise. Do not make any disclaimers or notes. Do not ask any follow-up questions. Do not start with here is or introduce the answer in any way. If there is no meaningful way to perform your task, return the input as is without any changes. Respond strictly in " + document.getElementById('language').value + ". Your task is to " + prompt
+                }],
                 model: modelName,
                 max_tokens: max_tokens,
                 temperature: parseInt(tempSlider.value)
@@ -254,10 +257,10 @@ async function callGroqAPI(prompt, max_tokens=null) {
         if (!response.ok) {
             const errorBody = await response.json();
             if (response.status == 503) {
-                await callGroqAPI(prompt, max_tokens)
+                await callGroqAPI(prompt, max_tokens);
             }
 
-            let errorMessage = errorBody.error.message
+            let errorMessage = errorBody.error.message;
             if (response.status == 429) {
                 errorMessage = "Rate limit exceeded. Try switching to another model. If that doesn't work, try entering your password again in the settings";
             }
@@ -267,13 +270,13 @@ async function callGroqAPI(prompt, max_tokens=null) {
         const data = await response.json();
         clearError();
         window.clearInterval(isProcessingBuffer);
-        loadingTip.style.display = 'none'
+        loadingTip.style.display = 'none';
         enableButtons();
         return data.choices[0].message.content;
     } catch (error) {
         displayError(error.message);
         window.clearInterval(isProcessingBuffer);
-        loadingTip.style.display = 'none'
+        loadingTip.style.display = 'none';
         enableButtons();
         return ``;
     }
@@ -309,9 +312,9 @@ async function changeStyle() {
 async function summarizeText() {
     const text = getTextToProcess();
     const percent = document.getElementById('summaryPercent').value;
-    const n = Math.ceil(Math.max(text.split(' ').length * ((100-percent)/100), 1));
+    const n = Math.ceil(Math.max(text.split(' ').length * ((100 - percent) / 100), 1));
     const prompt = `Summarize the following text in ${n} words.: ${text}`;
-    const result = await callGroqAPI(prompt, n*2); // convert n words to n tokens approxiamtely
+    const result = await callGroqAPI(prompt, n * 2); // convert n words to n tokens approxiamtely
     updateTextInput(result);
 }
 
@@ -320,7 +323,7 @@ async function expandText() {
     if (max_tokens < 1) {
         max_tokens = null;
     }
-        
+
     const text = getTextToProcess();
     const style = document.getElementById('style').value;
     let prompt;
@@ -445,7 +448,7 @@ function encryptApiKey(apiKey, password) {
 
 
 
-submitPassword.addEventListener('click', function () {
+submitPassword.addEventListener('click', function() {
     const password = passwordInput.value;
     if (decryptApiKey(password)) {
         passwordPrompt.style.display = 'none';
@@ -455,12 +458,12 @@ submitPassword.addEventListener('click', function () {
     }
 });
 
-noPassword.addEventListener('click', function () {
+noPassword.addEventListener('click', function() {
     passwordPrompt.style.display = 'none';
     passwordInput.value = '';
 });
 
-passwordInput.addEventListener('keydown', function (event) {
+passwordInput.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
         submitPassword.click();
     }
@@ -472,28 +475,31 @@ function getRandomIntInclusive(min, max) {
     return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled);
 }
 
-document.querySelector('.settings-container').addEventListener('click', function () {
+document.querySelector('.settings-container').addEventListener('click', function() {
     document.getElementById('settingsModal').style.display = 'block';
 });
 
 
-window.addEventListener('click', function (event) {
+window.addEventListener('click', function(event) {
     if (event.target == document.getElementById('settingsModal')) {
         document.getElementById('settingsModal').style.display = 'none';
     }
 });
+
 function isEmpty(str) {
-    if (str == null) { return true}
+    if (str == null) {
+        return true;
+    }
     return !str.trim().length;
 }
 
-window.setInterval(function () {
+window.setInterval(function() {
     if (isEmpty(localStorage.getItem('apiKey'))) {
         warningLabel.style.display = 'block';
     } else {
         warningLabel.style.display = 'none';
     }
-}, 500)
+}, 500);
 
 tempSlider.oninput = function() {
     var t = this.value;
@@ -505,4 +511,4 @@ tempSlider.oninput = function() {
         tempLabel.textContent = "Consistent";
     }
     localStorage.setItem('temperature', t);
-}
+};
