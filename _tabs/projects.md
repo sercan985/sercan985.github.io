@@ -4,10 +4,6 @@ icon: fas fa-info-circle
 order: 4
 ---
 
----
-Hello! I'm a hobbyist developer and musician with experience in python, web and game development. 
-# Projects
----
 ### [Text-Tools](https://sercan985.github.io/text-tools/)
 ![Text-Tools](assets/projects/text-tools.png)
 
@@ -24,7 +20,7 @@ A 2-player game where you can either split or steal points from your opponent.
 
 - ![#355570](https://via.placeholder.com/15/355570/000000?text=+) `Godot`
 
-### [truthful-job-picker](https://github.com/sercan985/truthful-job-picker)
+### [truthful-job-picker](https://text-tools-a1l.pages.dev/)
 ![truthful-job-picker](assets/projects/truthful-job-picker.png)
 
 A funny approach to verifying user-supplied employment status.
