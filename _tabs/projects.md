@@ -4,7 +4,7 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-### [Text-Tools](https://sercan985.github.io/text-tools/)
+### [Text-Tools](https://text-tools-a1l.pages.dev/)
 ![Text-Tools](assets/projects/text-tools.png)
 
 Text-Tools is a web app that allows you to manipulate text with various tools powered by LLMs.
