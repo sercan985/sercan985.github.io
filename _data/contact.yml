@@ -21,7 +21,7 @@
 
 - type: bandcamp
   icon: 'fa-brands fa-bandcamp'   # icons powered by <https://fontawesome.com/>
-  url:  'https://sercan985.bandcamp.com/album/3-edm-ep'                  # Fill with your Linkedin homepage
+  url:  'https://sercan985.bandcamp.com/'                  # Fill with your Linkedin homepage
   
 - type: rss
   icon: "fas fa-rss"
