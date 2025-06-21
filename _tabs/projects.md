@@ -41,7 +41,7 @@ A strategy-simulation game where you try to end the world through means of your 
 
 - `Godot`
 
-### tg-mass-file-search
+### [tg-mass-file-search](https://github.com/sercan985/tg-mass-file-search)
 ![tg-mass-file-search](assets/projects/tg-mass-file-search.png)
 
 A Flask-based web app that allows users to search for documents (PDFs, etc.) in Telegram channels containing keywords using the Telegram API.
